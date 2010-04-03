@@ -13,7 +13,7 @@ body {
 }
 
 a {
-    color: #459;
+    color: #33f;
     text-decoration: none;
     outline: 0;
 }
@@ -61,7 +61,7 @@ pre {
 }
 
 #header {
-    border-bottom: 2px solid #45b;
+    border-bottom: 2px solid #33f;
 }
 
 #header h1 {
@@ -77,7 +77,7 @@ pre {
 #footer {
     font-size: 0.8em;
     margin-top: 3em;
-    border-top: 2px solid #444;
+    border-top: 1px solid #33f;
 }
 
 @media print {
