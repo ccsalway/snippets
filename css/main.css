@@ -1,5 +1,5 @@
 body, input, select, textarea, td {
-    font-size: 10pt;
+    font-size: 12pt;
     font-weight: normal;
     font-family: arial, sans-serif;
     color: #000;
@@ -15,11 +15,11 @@ body {
 a {
     color: #456;
     text-decoration: none;
+    outline: 0;
 }
 
-a:hover {
+#content a:hover {
     text-decoration: underline;
-    outline: 0;
 }
 
 img {
@@ -61,5 +61,32 @@ form label {
     text-align: right;
 }
 
+#container {
+    margin: 2em 3em;
+}
+
+#header {
+    border-bottom: 2px solid #444;
+}
+
+#header h1 {
+    margin: 0;
+}
+
+#header h1 a {
+    padding: 0.6em 0;
+    width: 5em;
+    display: block;
+}
+
+#footer {
+    font-size: 0.8em;
+    margin-top: 3em;
+    border-top: 2px solid #444;
+}
+
 @media print {
+    #container {
+        margin: 0;
+    }
 }
