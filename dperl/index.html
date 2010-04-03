@@ -13,7 +13,9 @@ title: snippets/perl/dperl.pl
     as <a href="http://search.cpan.org/dist/Dist-Zilla">Dist::Zilla</a>, but
     I would like to think of dperl VS dzil as <a href="http://search.cpan.org/dist/CPAN">CPAN</a>
     vs <a href="http://search.cpan.org/dist/App-cpanminus">cpanm</a> - or at
-    least that is what I'm aming for. (!)
+    least that is what I'm aming for. (!) What I don't want to do, is to configure
+    anything, so 1) it just works 2) it might not work as
+    <a href="http://flodhest.net/contact">you want it to</a>.
 </p>
 <p>
     <code>dperl.pl</code> can be tested by running one of the lines below
@@ -44,7 +46,12 @@ $ wget -q http://github.com/jhthorsen/snippets/raw/master/perl/dperl.pl -O - | p
         <code>\d+\.[0-9_]+</code>.
     </li>
     <li>
-        Generates MANIFEST, MANIFEST.SKIP.
+        Update VERSION in top module:
+        <br><code>s/=head1 VERSION.*?\n=/=head1 VERSION\n\n$VERSION\n\n=/s</code>
+        <br><code>s/\$VERSION\s*=.*$/\$VERSION = '$VERSION';/m;</code>
+    </li>
+    <li>
+        Generates MANIFEST and MANIFEST.SKIP.
     </li>
     <li>
         Populates META.yml with extra data from <a href="#dperl_yml">dperl.yml</a>. (optional)
