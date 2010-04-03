@@ -5,34 +5,61 @@ title: snippets/perl/dperl.pl
 
 <h2>dperl.pl</h2>
 
-<ul>
-    <li><a href="http://github.com/jhthorsen/snippets/blob/master/perl/dperl.pl">source code</a></li>
-</ul>
-
+<h3>Description</h3>
 <p>
-    This program can be tested by running this code:
+    dperl is a result of <acronym title="jhthorsen@cpan.org">me</a> getting tired of
+    doing the same stuff - or rather forgetting to do the same stuff for
+    each of my perl projects. dperl does <i>not</i> feature the same things
+    as <a href="http://search.cpan.org/dist/Dist-Zilla">Dist::Zilla</a>, but
+    I would like to think of dperl VS dzil as <a href="http://search.cpan.org/dist/CPAN">CPAN</a>
+    vs <a href="http://search.cpan.org/dist/App-cpanminus">cpanm</a> - or at
+    least that is what I'm aming for. (!)
 </p>
-
+<p>
+    <code>dperl.pl</code> can be tested by running one of the lines below
+    in your favourite <a href="http://en.wikipedia.org/wiki/Terminal_emulator">terminal</a>:
+</p>
 <pre>
 $ wget -q http://bit.ly/dperl -O - | perl -
+$ wget -q http://jhthorsen.github.com/snippets/dperl/run -O - | perl -
 </pre>
 
-<h3>Prerequisites</h3>
-<p>
-    You need this structure in your project for this script to
-    work:
-</p>
-<pre>
-my-perl-project/
-my-perl-project/lib/
-my-perl-project/lib/My/
-my-perl-project/lib/My/Perl
-my-perl-project/lib/My/Perl/Project.pm
-</pre>
-<p>
-    Meaning the project directory must be called the same as the top module
-    in your repository. LowEr/uPperCaSE does not matter.
-</p>
+<h3>Features</h3>
+<ul>
+    <li>Generates README from top level module</li>
+    <li>Generates compile tests and pod tests</li>
+    <li>
+        Generates <a href="http://search.cpan.org/dist/Module-Install">Module::Install</a> styled Makefile.PL
+        (..and no - you cannot choose any other)
+        Use data from <a href="#dperl_yml">dperl.yml</a> to build module requirement
+        lists. (optional, but highly suggested)
+    </li>
+    <li>
+        Will insert release date in Changes file, at the first line containing
+        a proper formatted version number, and nothing more. Meaning:
+        <code>\d+\.[0-9_]+</code>.
+    </li>
+    <li>
+        Generates MANIFEST, MANIFEST.SKIP.
+    </li>
+    <li>
+        Populates META.yml with extra data from <a href="#dperl_yml">dperl.yml</a>. (optional)
+    </li>
+    <li>
+        Create a dist, without weird files present. (because of generated MANIFEST.SKIP)
+        <br>TODO: upload dist to CPAN and github.
+    </li>
+    <li>
+        Commit and tag the release. (git)
+        <br>TODO: push tag and commit as well.
+    </li>
+    <li>
+        Build and test the project.
+    </li>
+    <li>
+        Can properly clean up <i>all</i> build files.
+    </li>
+</ul>
 
 <h3>Synopsis</h3>
 <pre>
@@ -60,3 +87,58 @@ Usage dperl.pl [option]
  -dperl.yml
   * Prints an example dperl.yml config file
 </pre>
+
+<h2 id="dperl_yml">Sample dperl.yml</h2>
+<pre>
+---
+# http://jhthorsen.github.com/snippets/dperl
+requires:
+  namespace::autoclean: 0.09
+  Data::Dumper: 2.0
+test_requires:
+  Test::More: 0.9
+resources:
+  bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Foo-Bar
+  homepage: http://mary.github.com/foobar
+  repository: http://github.com/mary/foo-bar
+</pre>
+
+<h3>Prerequisites</h3>
+<p>
+    You need to structure your project like this for dperl.pl to work:
+</p>
+<pre>
+my-perl-project/
+my-perl-project/lib/
+my-perl-project/lib/My/
+my-perl-project/lib/My/Perl
+my-perl-project/lib/My/Perl/Project.pm
+</pre>
+<p>
+    Meaning the project directory must be called the same as the top module
+    in your repository. LowEr/uPperCaSE does not matter.
+</p>
+
+<h3>Resources</h3>
+<ul>
+    <li><a href="http://github.com/jhthorsen/snippets/blob/master/perl/dperl.pl">source code</a></li>
+    <li><a href="http://github.com/jhthorsen/snippets/issues">Issues</a></li>
+</ul>
+
+<h3>License</h3>
+<p>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+</p>
+<p>
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+</p>
+<p>
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+</p>
