@@ -48,11 +48,14 @@ h3 {
     font-size: 1.3em;
 }
 
-pre {
+code, pre {
     background: #fafafa;
     font-size: 0.9em;
-    line-height: 1.4em;
     border: 1px solid #ddd;
+}
+
+pre {
+    line-height: 1.4em;
     padding: 0.5em;
 }
 
