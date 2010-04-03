@@ -13,7 +13,7 @@ body {
 }
 
 a {
-    color: #456;
+    color: #459;
     text-decoration: none;
     outline: 0;
 }
@@ -48,7 +48,7 @@ h3 {
     font-size: 1.3em;
 }
 
-pre {
+pre {
     background: #fafafa;
     font-size: 0.9em;
     line-height: 1.4em;
@@ -61,7 +61,7 @@ pre {
 }
 
 #header {
-    border-bottom: 2px solid #444;
+    border-bottom: 2px solid #45b;
 }
 
 #header h1 {
