@@ -7,7 +7,18 @@ use File::Basename;
 use File::Find;
 use YAML::Tiny;
 
-help() unless @ARGV;
+if(@ARGV == 0) {
+    help();
+    exit 1;
+}
+elsif(@ARGV ~~ /dperl.yml/) {
+    dperl_yml();
+    exit 0;
+}
+elsif(@ARGV ~~ /man/) {
+    system perldoc => $0;
+    exit $?;
+}
 
 our $CONFIG = YAML::Tiny->read('dperl.yml');
 our $NAME = $CONFIG->[0]{'name'} || basename getcwd;
@@ -18,7 +29,7 @@ my $version_re = qr/\d+ \. \w+/x;
 
 name_to_module();
 
-if(@ARGV ~~ /-+update/) {
+if(@ARGV ~~ /update/) {
     clean();
     print "* Create/update t/00-load.t and t/99-pod*t\n";
     t_compile();
@@ -28,7 +39,7 @@ if(@ARGV ~~ /-+update/) {
     readme();
     print "* Repository got updated\n";
 }
-elsif(@ARGV ~~ /-+build/) {
+elsif(@ARGV ~~ /build/) {
     clean();
     print "* Create/update t/00-load.t and t/99-pod*t\n";
     t_compile();
@@ -44,21 +55,39 @@ elsif(@ARGV ~~ /-+build/) {
     dist();
     print "* $NAME got built\n";
 }
-elsif(@ARGV ~~ /-+release/) {
+elsif(@ARGV ~~ /release/) {
     release();
 }
-elsif(@ARGV ~~ /-+test/) {
+elsif(@ARGV ~~ /share/) {
+    changes();
+    share();
+    print "* $NAME got shared\n";
+}
+elsif(@ARGV ~~ /test/) {
     clean();
     t_compile();
     t_pod();
     makefile();
     test();
 }
-elsif(@ARGV ~~ /-+clean/) {
+elsif(@ARGV ~~ /clean/) {
     clean();
     print "$NAME got cleaned\n";
 }
-elsif(@ARGV ~~ /dperl.yml/) {
+else {
+    help();
+    exit 1;
+}
+
+exit 0;
+
+#=============================================================================
+sub vsystem {
+    print "> @_\n";
+    system @_;
+}
+
+sub dperl_yml {
     print <<"DPERL";
 # Example dperl.yml:
 ---
@@ -73,43 +102,24 @@ resources:
   repository: http://github.com/wall-e/foo-bar
 
 DPERL
-    exit 1;
-}
-else {
-    help();
 }
 
-exit 0;
-
-#=============================================================================
 sub help {
-    print <<"HELP";
-Usage $0 [option]
+    my $do_print;
 
- -update
-  * Create/update t/00-load.t and t/99-pod*t
-  * Create/update README
+    open my $MAN, '<', $0 or die "Read '$0': $!";
 
- -build
-  * Same as -update
-  * Update Changes with release date
-  * Create Makefile.PL, MANIFEST and META.yml
-  * Create a distribution (.tar.gz)
-
- -release
-  * Will create a new git commit and tag
-
- -test
-  * Will test the project
-
- -clean
-  * Will remove files and directories
-
- -dperl.yml
-  * Prints an example dperl.yml config file
-
-HELP
-    exit 1;
+    while(<$MAN>) {
+        if($do_print and /^=/) {
+            last;
+        }
+        elsif($do_print) {
+            print;
+        }
+        elsif(/^=head1 SYNOPSIS/) {
+            $do_print = 1;
+        }
+    }
 }
 
 sub name_to_module {
@@ -167,8 +177,49 @@ sub release {
         die "Need to run with -build first\n";
     }
 
-    system git => commit => -a => -m => $commit_msg;
-    system git => tag => $VERSION;
+    vsystem git => commit => -a => -m => $commit_msg;
+    vsystem git => tag => $VERSION;
+}
+
+sub share {
+    eval "use CPAN::Uploader; 1" or die "This feature requires 'CPAN::Uploader' to be installed";
+
+    my $file = "$NAME-$VERSION.tar.gz";
+    my $pause = get_pause_info();
+    my $branch = qx/git branch|grep "^*"|cut -d' ' -f2/;
+
+    chomp $branch;
+
+    unless(-e $file) {
+        die "Need to run with -build first\n";
+    }
+
+    vsystem git => push => origin => $branch;
+    vsystem git => push => '--tags' => 'origin';
+    return;
+
+    # might die...
+    CPAN::Uploader->new($file, {
+        user => $pause->{'user'},
+        password => $pause->{'password'},
+    });
+}
+
+sub get_pause_info {
+    my $info;
+
+    open my $PAUSE, '<', $ENV{'HOME'} .'/.pause' or die "Read ~/.pause: $!\n";
+
+    while(<$PAUSE>) {
+        my($k, $v) = split /\s+/, $_, 2;
+        chomp $v;
+        $info->{$k} = $v;
+    }
+
+    die "'user <name>' is not set in ~/.pause\n" unless $info->{'user'};
+    die "'password <mysecret>' is not set in ~/.pause\n" unless $info->{'password'};
+
+    return $info;
 }
 
 sub changes {
@@ -203,16 +254,16 @@ sub changes {
 }
 
 sub readme {
-    system "perldoc -tT $TOP_MODULE > README";
+    vsystem "perldoc -tT $TOP_MODULE > README";
 }
 
 sub clean {
-    system "make clean 2>/dev/null";
-    system "rm -r $NAME* META.yml MANIFEST* Makefile* blib/ inc/ 2>/dev/null";
+    vsystem "make clean 2>/dev/null";
+    vsystem "rm -r $NAME* META.yml MANIFEST* Makefile* blib/ inc/ 2>/dev/null";
 }
 
 sub test {
-    system make => 'test';
+    vsystem make => 'test';
 }
 
 sub makefile {
@@ -236,7 +287,7 @@ sub makefile {
     print $MAKEFILE "auto_install;\n";
     print $MAKEFILE "WriteAll;\n";
 
-    system "perl Makefile.PL";
+    vsystem "perl Makefile.PL";
 }
 
 sub manifest {
@@ -252,12 +303,12 @@ sub manifest {
                            ^MANIFEST.*
                        ), $NAME;
 
-    system "make manifest" and die "Execute 'make manifest': $!\n";
+    vsystem "make manifest" and die "Execute 'make manifest': $!\n";
 }
 
 sub dist {
-    system "rm $NAME* 2>/dev/null";
-    system "make dist" and die "Execute 'make dist': $!";
+    vsystem "rm $NAME* 2>/dev/null";
+    vsystem "make dist" and die "Execute 'make dist': $!";
 }
 
 sub meta_yml {
@@ -312,9 +363,94 @@ sub t_compile {
     print $USE_OK t_header();
     printf $USE_OK "plan tests => %i;\n", int @modules;
 
-    for my $module (sort { length $a <=> length $b } @modules) {
+    for my $module (sort { $a cmp $b } @modules) {
         printf $USE_OK "use_ok('%s');\n", $module;
     }
 
     close $USE_OK;
 }
+
+__END__
+
+=head1 NAME
+
+dperl.pl - Helps maintaining your perl project
+
+=head1 DESCRIPTION
+
+dperl is a result of me getting tired of doing the same stuff - or
+rather forgetting to do the same stuff for each of my perl projects.
+dperl does not feature the same things as Dist::Zilla, but I would
+like to think of dperl VS dzil as CPAN  vs cpanm - or at least that
+is what I'm aming for. (!) What I don't want to do, is to configure
+anything, so 1) it just works 2) it might not work as you want it to.
+
+=head1 SYNOPSIS
+
+ dperl.pl [option]
+
+ -update
+  * Create/update t/00-load.t and t/99-pod*t
+  * Create/update README
+
+ -build
+  * Same as -update
+  * Update Changes with release date
+  * Create Makefile.PL, MANIFEST and META.yml
+  * Create a distribution (.tar.gz)
+
+ -release
+  * Will create a new git commit and tag
+
+ -share (experimental)
+  * Will upload the disted file to CPAN
+  * Will push commit and tag to "origin"
+
+ -test
+  * Will test the project
+
+ -clean
+  * Will remove files and directories
+
+ -dperl.yml
+  * Prints an example dperl.yml config file
+
+=head1 SAMPLE dperl.yml
+
+  ---
+  # http://jhthorsen.github.com/snippets/dperl
+  requires:
+    namespace::autoclean: 0.09
+    Data::Dumper: 2.0
+  test_requires:
+    Test::More: 0.9
+  resources:
+    bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Foo-Bar
+    homepage: http://mary.github.com/foobar
+    repository: http://github.com/mary/foo-bar
+
+=cut
+
+
+=head1 SEE ALSO
+
+L<App::Cpanminus>,
+L<Dist::Zilla>,
+L<http://jhthorsen.github.com/snippets/dperl>.
+
+=head1 BUGS
+
+Report bugs and issues at L<http://github.com/jhthorsen/snippets/issues>.
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2007 Jan Henning Thorsen, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself. 
+
+=head1 AUTHOR
+
+Jan Henning Thorsen, C<jhthorsen at cpan.org>
+
+=cut
