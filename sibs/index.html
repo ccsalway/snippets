@@ -1,0 +1,96 @@
+---
+layout: default
+title: snippets/bin/sibs
+---
+
+<h2>sibs - Simple incremental backup script</h2>
+
+<h3>Description</h3>
+<p>
+    This script is a wrapper around "rsync", and takes backups from one host
+    to another. In addition to doing backups, it can also keep track of
+    history and changes of files and folders, by doing incremental backups.
+    The incremental backups works by hardlinking the files from one folder
+    to another:
+</p>
+<pre>
+./incoming          = temporary directory where rsync put its data.
+./<interval>.<date> = directory that holds a backup.
+                      <date> = [month][date]-[hour][minute]
+</pre>
+<p>
+    Number of incremental backups are controlled by $KEEP_HOUR and $KEEP_DAY.
+</p>
+<p>
+    The backup is stored in this path: $DST_DIR/$BACKUP_NAME/ on $DST_HOST.
+    See "CONFIG FILE SAMPLE" later in this script.
+</p>
+
+<h2>Synopsis</h2>
+<pre>
+$ sibs <man|help>
+$ sibs <hour|day|keygen|test> <config-file>
+$ sibs <status> <config-file> <path>
+$ sibs <config> [config-file]
+</pre>
+<p>
+    Sibs must be initiated on the computer that is taken backup from, and must
+    exist in $PATH on the host that is taken backup to.
+</p>
+<ul>
+    <li>help   - this help message.</li>
+    <li>man    - the inline manual</li>
+    <li>hour   - do backup, with 'hour' interval</li>
+    <li>day    - do backup, with 'day' interval</li>
+    <li>status - Get changes/deleted status of a file</li>
+    <li>keygen - create ssh-sertificates, for automated backups.</li>
+    <li>test   - checks config-file and send a test mail.</li>
+    <li>config - print either sample config, or content of config-file</li>
+</ul>
+</pre> 
+
+<h3>Status example</h3>
+<pre>
+$ sibs status myconfig.env path/to/file
+--- Status for file path/to/file
+A day.1104-2249 312K
+D day.1104-2332 0
+A day.1104-2355 350K
+- day.1105-0012 350K
+M day.1105-0012 310K
+
+"A" = added, "D" = deleted, "M" = modified, "-" = no change.
+</pre>
+<p>
+"path/to/file" is translated into "$DST_DIR/$BACKUP_NAME/path/to/file" on
+the remote machine. "path/to/file" cannot contain any form for wildcards.
+</p>
+<p>
+Alternative on remote machine:
+<p>
+<pre>
+$ sibs status /dst_dir/ backup_name path/to/file
+</pre>
+
+<h3>Requirements</h3>
+<p>
+    ssh, rsync, bash, sendmail, cat and perl
+</p>
+
+<h3>License</h3>
+<p>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+</p>
+<p>
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+</p>
+<p>
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
+</p>

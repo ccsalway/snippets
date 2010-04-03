@@ -1,0 +1,62 @@
+---
+layout: default
+title: snippets/perl/dperl.pl
+---
+
+<h2>dperl.pl</h2>
+
+<ul>
+    <li><a href="http://github.com/jhthorsen/snippets/blob/master/perl/dperl.pl">source code</a></li>
+</ul>
+
+<p>
+    This program can be tested by running this code:
+</p>
+
+<pre>
+wget -q http://jhthorsen.github.com/snippets/dperl/run -O - | perl - -h
+</pre>
+
+<h3>Prerequisites</h3>
+<p>
+    You need this structure in your project for this script to
+    work:
+</p>
+<pre>
+my-perl-project/
+my-perl-project/lib/
+my-perl-project/lib/My/
+my-perl-project/lib/My/Perl
+my-perl-project/lib/My/Perl/Project.pm
+</pre>
+<p>
+    Meaning the project directory must be called the same as the top module
+    in your repository. LowEr/uPperCaSE does not matter.
+</p>
+
+<h3>Help</h3>
+<pre>
+Usage /usr/local/bin/dperl.pl [option]
+
+ -update
+  * Create/update t/00-load.t and t/99-pod*t
+  * Create/update README
+
+ -build
+  * Same as -update
+  * Update Changes with release date
+  * Create Makefile.PL, MANIFEST and META.yml
+  * Create a distribution (.tar.gz)
+
+ -release
+  * Will create a new git commit and tag
+
+ -test
+  * Will test the project
+
+ -clean
+  * Will remove files and directories
+
+ -dperl.yml
+  * Prints an example dperl.yml config file
+</pre>
