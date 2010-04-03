@@ -7,7 +7,8 @@ title: snippets/bin/sibs
 
 <h3>Description</h3>
 <p>
-    This script is a wrapper around "rsync", and takes backups from one host
+    This script is a wrapper around <a href="http://samba.anu.edu.au/rsync/">rsync</a>,
+    and takes backups from one host
     to another. In addition to doing backups, it can also keep track of
     history and changes of files and folders, by doing incremental backups.
     The incremental backups works by hardlinking the files from one folder
@@ -19,11 +20,12 @@ title: snippets/bin/sibs
                       &lt;date&gt; = [month][date]-[hour][minute]
 </pre>
 <p>
-    Number of incremental backups are controlled by $KEEP_HOUR and $KEEP_DAY.
+    Number of incremental backups are controlled by <code>$KEEP_HOUR</code> and
+    <code>$KEEP_DAY</code>.
 </p>
 <p>
-    The backup is stored in this path: $DST_DIR/$BACKUP_NAME/ on $DST_HOST.
-    See "CONFIG FILE SAMPLE" later in this script.
+    The backup is stored in this path: <code>$DST_DIR/$BACKUP_NAME/</code> on
+    <code$DST_HOST</code>.
 </p>
 
 <h3>Synopsis</h3>
@@ -35,7 +37,7 @@ $ sibs &lt;config&gt; [config-file]
 </pre>
 <p>
     Sibs must be initiated on the computer that is taken backup from, and must
-    exist in $PATH on the host that is taken backup to.
+    exist in <code>$PATH</code> on the host that is taken backup to.
 </p>
 <ul>
     <li>help   - this help message.</li>
@@ -61,11 +63,11 @@ M day.1105-0012 310K
 "A" = added, "D" = deleted, "M" = modified, "-" = no change.
 </pre>
 <p>
-"path/to/file" is translated into "$DST_DIR/$BACKUP_NAME/path/to/file" on
-the remote machine. "path/to/file" cannot contain any form for wildcards.
+    "path/to/file" is translated into "$DST_DIR/$BACKUP_NAME/path/to/file" on
+    the remote machine. "path/to/file" cannot contain any form for wildcards.
 </p>
 <p>
-Alternative on remote machine:
+    Alternative on remote machine:
 <p>
 <pre>
 $ sibs status /dst_dir/ backup_name path/to/file
@@ -73,7 +75,11 @@ $ sibs status /dst_dir/ backup_name path/to/file
 
 <h3>Requirements</h3>
 <p>
-    ssh, rsync, bash, sendmail, cat and perl
+    <a href="http://www.openssh.com/">ssh</a>,
+    <a href="http://samba.anu.edu.au/rsync/">rsync</a>,
+    <a href="www.gnu.org/software/bash">bash</a>,
+    sendmail, cat and
+    <a href="http://www.perl.org/">perl</a>.
 </p>
 
 <h3>Resources</h3>
