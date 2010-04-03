@@ -15,8 +15,8 @@ title: snippets/bin/sibs
 </p>
 <pre>
 ./incoming          = temporary directory where rsync put its data.
-./<interval>.<date> = directory that holds a backup.
-                      <date> = [month][date]-[hour][minute]
+./&lt;interval&gt;.&lt;date&gt; = directory that holds a backup.
+                      &lt;date&gt; = [month][date]-[hour][minute]
 </pre>
 <p>
     Number of incremental backups are controlled by $KEEP_HOUR and $KEEP_DAY.
@@ -28,10 +28,10 @@ title: snippets/bin/sibs
 
 <h2>Synopsis</h2>
 <pre>
-$ sibs <man|help>
-$ sibs <hour|day|keygen|test> <config-file>
-$ sibs <status> <config-file> <path>
-$ sibs <config> [config-file]
+$ sibs &lt;man|help&gt;
+$ sibs &lt;hour|day|keygen|test&gt; &lt;config-file&gt;
+$ sibs &lt;status&gt; &lt;config-file&gt; &lt;path&gt;
+$ sibs &lt;config&gt; [config-file]
 </pre>
 <p>
     Sibs must be initiated on the computer that is taken backup from, and must
