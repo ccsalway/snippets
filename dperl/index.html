@@ -118,7 +118,7 @@ resources:
   repository: http://github.com/mary/foo-bar
 </pre>
 
-<h3>Prerequisites</h3>
+<h3>Requirements</h3>
 <p>
     You need to structure your project like this for dperl.pl to work:
 </p>
@@ -133,6 +133,13 @@ my-perl-project/lib/My/Perl/Project.pm
     Meaning the project directory must be called the same as the top module
     in your repository. LowEr/uPperCaSE does not matter.
 </p>
+<ul>
+    <li>Perl 5.10.x</li>
+    <li>Cwd</li>
+    <li>File::Basename</li>
+    <li>File::Find</li>
+    <li>YAML::Tiny - not in core, but required by CPAN/CPANPLUS</li>
+</ul>
 
 <h3>Resources</h3>
 <ul>
