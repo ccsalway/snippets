@@ -32,44 +32,30 @@ $ wget -q http://github.com/jhthorsen/snippets/raw/master/perl/dperl.pl -O - | p
 
 <h3>Features</h3>
 <ul>
-    <li>Generates README from top level module</li>
-    <li>Generates compile tests and pod tests</li>
     <li>
         Generates <a href="http://search.cpan.org/dist/Module-Install">Module::Install</a> styled Makefile.PL
-        (..and no - you cannot choose any other)
-        Use data from <a href="#dperl_yml">dperl.yml</a> to build module requirement
-        lists. (optional, but highly suggested)
+        (..and no - you cannot choose any other) from guesswork and black magic
     </li>
     <li>
         Will insert release date in Changes file, at the first line containing
         a proper formatted version number, and nothing more. Meaning:
         <code>\d+\.[0-9_]+</code>.
     </li>
+    <li>Generates compile tests and pod tests</li>
+    <li>Generates MANIFEST and MANIFEST.SKIP</li>
+    <li>Generates README from top level module</li>
     <li>
         Update VERSION in top module:
         <br><code>s/=head1 VERSION.*?\n=/=head1 VERSION\n\n$VERSION\n\n=/s</code>
         <br><code>s/\$VERSION\s*=.*$/\$VERSION = '$VERSION';/m;</code>
     </li>
     <li>
-        Generates MANIFEST and MANIFEST.SKIP.
-    </li>
-    <li>
-        Populates META.yml with extra data from <a href="#dperl_yml">dperl.yml</a>. (optional)
-    </li>
-    <li>
         Create a dist, without weird files present. (because of generated MANIFEST.SKIP)
         <br>TODO: upload dist to CPAN and github.
     </li>
-    <li>
-        Commit and tag the release. (git)
-        <br>TODO: push tag and commit as well.
-    </li>
-    <li>
-        Build and test the project.
-    </li>
-    <li>
-        Can properly clean up <i>all</i> build files.
-    </li>
+    <li>Commit and tag the release and pushes the changes to "origin"</li>
+    <li>Build and test the project</li>
+    <li>Can properly clean up <i>all</i> build files</li>
 </ul>
 
 <h3>Synopsis</h3>
@@ -77,48 +63,34 @@ $ wget -q http://github.com/jhthorsen/snippets/raw/master/perl/dperl.pl -O - | p
 Usage dperl.pl [option]
 
  -update
+  * Update version information in main module
   * Create/update t/00-load.t and t/99-pod*t
   * Create/update README
 
  -build
   * Same as -update
   * Update Changes with release date
-  * Create Makefile.PL, MANIFEST and META.yml
-  * Create a distribution (.tar.gz)
-
- -release (option will be renamed)
-  * Will create a new git commit and tag
+  * Create MANIFEST* and META.yml
+  * Tag and commit the changes (locally)
+  * Build a distribution (.tar.gz)
 
  -share (experimental)
-  * Will upload the disted file to CPAN
-  * Will push commit and tag to "origin"
+  * Push commit and tag to "origin"
+  * Upload the disted file to CPAN
 
  -test
-  * Will test the project
+  * Create/update t/00-load.t and t/99-pod*t
+  * Test the project
 
  -clean
-  * Will remove files and directories
+  * Remove files and directories which should not be included
+    in the project repo
 
- -dperl.yml
-  * Prints an example dperl.yml config file
+ -makefile
+  * Create a Makefile.PL from plain guesswork
 
  -man
   * Display manual for dperl.pl
-</pre>
-
-<h2 id="dperl_yml">Sample dperl.yml</h2>
-<pre>
----
-# http://jhthorsen.github.com/snippets/dperl
-requires:
-  namespace::autoclean: 0.09
-  Data::Dumper: 2.0
-test_requires:
-  Test::More: 0.9
-resources:
-  bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=Foo-Bar
-  homepage: http://mary.github.com/foobar
-  repository: http://github.com/mary/foo-bar
 </pre>
 
 <h3>Requirements</h3>
