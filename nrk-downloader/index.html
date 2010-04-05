@@ -1,0 +1,55 @@
+---
+layout: default
+title: snippets/bin/nrk-downloader
+---
+
+<h2>NRK downloader - Download streams from NRK</h2>
+
+<h3>Description</h3>
+<p>
+    This script use vlc to download streams from
+    <a href="http://www1.nrk.no/nett-tv">http://www1.nrk.no/nett-tv</a>.
+</p>
+
+<h3>Synopsis</h3>
+<pre>
+Help:
+$ nrk-downloader.sh
+
+Download a single episode:
+$ nrk-downloader.sh http://www1.nrk.no/nett-tv/klipp/582810
+
+Download a complete show:
+$ nrk-downloader.sh http://www1.nrk.no/nett-tv/kategori/3521
+
+The number at the end of the url can be copy/pasted from the
+location bar in your browser, after locating the show.
+</pre>
+
+<h3>Requirements</h3>
+<p>
+    Basic command line tools,
+    <a href="http://www.videolan.org/vlc">vlc</a>,
+    <a href="http://www.gnu.org/software/wget">wget</a> and
+    <a href="http://www.perl.org/">perl</a>.
+</p>
+
+<h3>Resources</h3>
+<ul>
+    <li><a href="http://github.com/jhthorsen/snippets/blob/master/media/nrk-downloader.sh">Source code</a></li>
+    <li><a href="http://github.com/jhthorsen/snippets/issues">Issues</a></li>
+</ul>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_identifier = 'sibs';
+  (function() {
+   var dsq = document.createElement('script');
+   dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://jhthorsen-github.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=jhthorsen-github">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
