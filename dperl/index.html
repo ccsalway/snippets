@@ -4,7 +4,6 @@ title: snippets/perl/dperl.pl
 ---
 
 <h2>dperl.pl - Helps maintaining your perl project</h2>
-
 <ol>
     <li><a href="#description">Description</a></li>
     <li><a href="#features">Features</a></li>
@@ -24,7 +23,7 @@ title: snippets/perl/dperl.pl
     getting tired of doing the same stuff - or rather forgetting to do the same stuff for
     each of my perl projects. dperl does <i>not</i> feature the same things
     as <a href="http://search.cpan.org/dist/Dist-Zilla">Dist::Zilla</a>, but
-    I would like to think of dperl VS dzil as <a href="http://search.cpan.org/dist/CPAN">CPAN</a>
+    I would like to think of dperl VS dzil as <a href="http://search.cpan.org/dist/CPAN">cpan</a>
     vs <a href="http://search.cpan.org/dist/App-cpanminus">cpanm</a> - or at
     least that is what I'm aming for (!)
 </p>
@@ -120,14 +119,13 @@ Usage dperl.pl [option]
 
 <h3 id="requirements">Requirements</h3>
 <ul>
-    <li>Cwd - core module</li>
-    <li>File::Basename - core module</li>
-    <li>File::Find - core module</li>
-    <li>YAML::Tiny - not in core, but required by CPAN/CPANPLUS</li>
+    <li>Cwd (core module)</li>
+    <li>File::Basename (core module)</li>
+    <li>File::Find (core module)</li>
+    <li>YAML::Tiny (not in core, but required by CPAN/CPANPLUS)</li>
 </ul>
 
 <h3 id="config_file">Sample config file</h3>
-
 <pre>
 ---
 # Default to a converted version of top_module
@@ -183,7 +181,7 @@ git push --tags origin
     The expected format in <code>Changes</code> is:
 </p>
 <pre>
-Some random header, for Example:
+Some random header, for example:
 Revision history for Foo-Bar
 
 0.02
