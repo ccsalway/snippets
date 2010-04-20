@@ -5,7 +5,20 @@ title: snippets/perl/dperl.pl
 
 <h2>dperl.pl - Helps maintaining your perl project</h2>
 
-<h3>Description</h3>
+<ol>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#synopsis">Synopsis</a></li>
+    <li><a href="#attributes_and_methods">Internal attributes and methods</a></li>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#config_file">Sample config file</a></li>
+    <li><a href="#share">Sharing the module</a></li>
+    <li><a href="#changes_file">Changes file</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#license">License</a></li>
+</ol>
+
+<h3 id="description">Description</h3>
 <p>
     <code>dperl</code> is a result of <acronym title="jhthorsen@cpan.org">me</acronym>
     getting tired of doing the same stuff - or rather forgetting to do the same stuff for
@@ -13,12 +26,10 @@ title: snippets/perl/dperl.pl
     as <a href="http://search.cpan.org/dist/Dist-Zilla">Dist::Zilla</a>, but
     I would like to think of dperl VS dzil as <a href="http://search.cpan.org/dist/CPAN">CPAN</a>
     vs <a href="http://search.cpan.org/dist/App-cpanminus">cpanm</a> - or at
-    least that is what I'm aming for. (!) What I don't want to do, is to configure
-    anything, so 1) it just works 2) it might not work as
-    <a href="http://flodhest.net/contact">you want it to</a>.
+    least that is what I'm aming for (!)
 </p>
 <p>
-    <code>dperl.pl</code> can be tested by running one of the lines below
+    <code>dperl</code> can be tested by running one of the lines below
     in your favourite <a href="http://en.wikipedia.org/wiki/Terminal_emulator">terminal</a>:
 </p>
 <pre>
@@ -30,7 +41,7 @@ $ wget -q http://jhthorsen.github.com/snippets/dperl/run -O - | perl -
 $ wget -q http://github.com/jhthorsen/snippets/raw/master/perl/dperl.pl -O - | perl -
 </pre>
 
-<h3>Features</h3>
+<h3 id="features">Features</h3>
 <ul>
     <li>
         Generates <a href="http://search.cpan.org/dist/Module-Install">Module::Install</a> styled Makefile.PL
@@ -51,14 +62,13 @@ $ wget -q http://github.com/jhthorsen/snippets/raw/master/perl/dperl.pl -O - | p
     </li>
     <li>
         Create a dist, without weird files present. (because of generated MANIFEST.SKIP)
-        <br>TODO: upload dist to CPAN and github.
     </li>
     <li>Commit and tag the release and pushes the changes to "origin"</li>
     <li>Build and test the project</li>
     <li>Can properly clean up <i>all</i> build files</li>
 </ul>
 
-<h3>Synopsis</h3>
+<h3 id="synopsis">Synopsis</h3>
 <pre>
 Usage dperl.pl [option]
 
@@ -74,7 +84,7 @@ Usage dperl.pl [option]
   * Tag and commit the changes (locally)
   * Build a distribution (.tar.gz)
 
- -share (experimental)
+ -share
   * Push commit and tag to "origin"
   * Upload the disted file to CPAN
 
@@ -93,7 +103,7 @@ Usage dperl.pl [option]
   * Display manual for dperl.pl
 </pre>
 
-<h3>Internal attributes and methods</h3>
+<h3 id="attributes_and_methods">Internal attributes and methods</h3>
 
 <h4>Dump internal attributes</h4>
 <p>
@@ -108,30 +118,15 @@ Usage dperl.pl [option]
 --find-requires, --make.
 </p>
 
-<h3>Requirements</h3>
-<p>
-    You need to structure your project like this for dperl.pl to work:
-</p>
-<pre>
-my-perl-project/
-my-perl-project/lib/
-my-perl-project/lib/My/
-my-perl-project/lib/My/Perl
-my-perl-project/lib/My/Perl/Project.pm
-</pre>
-<p>
-    Meaning the project directory must be called the same as the top module
-    in your repository. LowEr/uPperCaSE does not matter.
-</p>
+<h3 id="requirements">Requirements</h3>
 <ul>
-    <li>Perl 5.10.x</li>
-    <li>Cwd</li>
-    <li>File::Basename</li>
-    <li>File::Find</li>
+    <li>Cwd - core module</li>
+    <li>File::Basename - core module</li>
+    <li>File::Find - core module</li>
     <li>YAML::Tiny - not in core, but required by CPAN/CPANPLUS</li>
 </ul>
 
-<h1>Sample config file</h1>
+<h3 id="config_file">Sample config file</h3>
 
 <pre>
 ---
@@ -154,46 +149,39 @@ share_extension: AnyModuleName
 # share_extension-&gt;upload_file($dist_file, share_params);
 share_params: { answer: 42 }
 </pre>
-
 <p>
-    All config params are optional, since <code>dperl.pl</code> will probably figure out
+    All config params are optional, since <code>dperl</code> will probably figure out
     the information for you.
 </p>
 
-<h1>Sharing the module</h1>
-
+<h3 id="share">Sharing the module</h3>
 <p>
-    By default the CPAN::Uploader module is used to upload the module to CPAN.  This module will
-    use the information from "$HOME/.pause" to find login information:
+    By default <a href="http://search.cpan.org/dist/CPAN-Uploader">CPAN::Uploader</a> is used
+    to upload the module. This module will use the information from <code>$HOME/.pause</code>
+    to find login information:
 </p>
-
 <pre>
 user your_pause_username
 password your_secret_pause_password
 </pre>
-
 <p>
-        It will also use git to push changes and tag a new release:
+    <code>dperl</code> will also use git to push changes and tag a new release:
 </p>
-
 <pre>
 git commit -a -m "$message_from_changes_file"
 git tag "$latest_version_in_changes_file"
 git push origin $current_branch
 git push --tags origin
 </pre>
-
 <p>
     The commit and tag is done when on <code>-dist</code>, while pushing the changes
     to origin is done on <code>-share</code>.
 </p>
 
-<h1>Changes</h1>
-
+<h3 id="changes_file">Changes file</h3>
 <p>
     The expected format in <code>Changes</code> is:
 </p>
-
 <pre>
 Some random header, for Example:
 Revision history for Foo-Bar
@@ -206,18 +194,17 @@ Revision history for Foo-Bar
     * First release
     * Add some feature
 </pre>
-
 <p>
-    <code>dperl.pl</code> will automatically add the date before creating a dist.
+    <code>dperl</code> will automatically add the date before creating a dist.
 </p>
 
-<h3>Resources</h3>
+<h3 id="resources">Resources</h3>
 <ul>
     <li><a href="http://github.com/jhthorsen/snippets/blob/master/perl/dperl.pl">Source code</a></li>
     <li><a href="http://github.com/jhthorsen/snippets/issues">Issues</a></li>
 </ul>
 
-<h3>License</h3>
+<h3 id="license">License</h3>
 <p>
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
