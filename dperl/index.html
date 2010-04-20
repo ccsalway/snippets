@@ -131,6 +131,86 @@ my-perl-project/lib/My/Perl/Project.pm
     <li>YAML::Tiny - not in core, but required by CPAN/CPANPLUS</li>
 </ul>
 
+<h1>Sample config file</h1>
+
+<pre>
+---
+# Default to a converted version of top_module
+name: Foo-Bar
+
+# Default to a converted version of the project folder
+# Example: ./foo-bar/lib/Foo/Bar.pm, were "foo-bar" is the
+# project folder.
+top_module: lib/Foo/Bar.pm
+
+# Default to a converted version of top_module.
+top_module_name: Foo::Bar
+
+# Default to CPAN::Uploader. Can also be set through
+# DPERL_SHARE_MODULE environment variable.
+share_extension: AnyModuleName
+
+# Not in use if share_extension == CPAN::Uploader. Usage:
+# share_extension-&gt;upload_file($dist_file, share_params);
+share_params: { answer: 42 }
+</pre>
+
+<p>
+    All config params are optional, since <code>dperl.pl</code> will probably figure out
+    the information for you.
+</p>
+
+<h1>Sharing the module</h1>
+
+<p>
+    By default the CPAN::Uploader module is used to upload the module to CPAN.  This module will
+    use the information from "$HOME/.pause" to find login information:
+</p>
+
+<pre>
+user your_pause_username
+password your_secret_pause_password
+</pre>
+
+<p>
+        It will also use git to push changes and tag a new release:
+</p>
+
+<pre>
+git commit -a -m "$message_from_changes_file"
+git tag "$latest_version_in_changes_file"
+git push origin $current_branch
+git push --tags origin
+</pre>
+
+<p>
+    The commit and tag is done when on <code>-dist</code>, while pushing the changes
+    to origin is done on <code>-share</code>.
+</p>
+
+<h1>Changes</h1>
+
+<p>
+    The expected format in <code>Changes</code> is:
+</p>
+
+<pre>
+Some random header, for Example:
+Revision history for Foo-Bar
+
+0.02
+    * Fix something
+    * Add something else
+
+0.01 Tue Apr 20 19:34:15 CEST 2010
+    * First release
+    * Add some feature
+</pre>
+
+<p>
+    <code>dperl.pl</code> will automatically add the date before creating a dist.
+</p>
+
 <h3>Resources</h3>
 <ul>
     <li><a href="http://github.com/jhthorsen/snippets/blob/master/perl/dperl.pl">Source code</a></li>
