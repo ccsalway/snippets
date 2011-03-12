@@ -1,0 +1,326 @@
+---
+layout: default
+title: Synchronize IMAP <=> Maildir folders
+---
+
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#todo">Todo</a></li>
+	</ul>
+
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#disclaimer">DISCLAIMER</a></li>
+	<li><a href="#environment">ENVIRONMENT</a></li>
+	<ul>
+
+		<li><a href="#verbosity_syncimap">VERBOSITY_SYNCIMAP</a></li>
+	</ul>
+
+	<li><a href="#attributes">ATTRIBUTES</a></li>
+	<ul>
+
+		<li><a href="#maildir">maildir</a></li>
+		<li><a href="#port">port</a></li>
+		<li><a href="#server">server</a></li>
+		<li><a href="#ssl">ssl</a></li>
+		<li><a href="#username">username</a></li>
+		<li><a href="#password">password</a></li>
+		<li><a href="#timeout">timeout</a></li>
+		<li><a href="#can_delete">can_delete</a></li>
+		<li><a href="#trash_mailbox">trash_mailbox</a></li>
+	</ul>
+
+	<li><a href="#methods">METHODS</a></li>
+	<ul>
+
+		<li><a href="#track_file">track_file</a></li>
+		<li><a href="#tracked_files">tracked_files</a></li>
+		<li><a href="#tracked_file_timestamp">tracked_file_timestamp</a></li>
+		<li><a href="#untrack_file">untrack_file</a></li>
+		<li><a href="#uid_to_file">uid_to_file</a></li>
+		<li><a href="#login">login</a></li>
+		<li><a href="#dump">dump</a></li>
+		<li><a href="#sync">sync</a></li>
+		<li><a href="#sync_message">sync_message</a></li>
+		<li><a href="#remote_delete">remote_delete</a></li>
+		<li><a href="#uid">uid</a></li>
+		<li><a href="#write_mail_map">write_mail_map</a></li>
+		<li><a href="#new">new</a></li>
+	</ul>
+
+	<li><a href="#autoload">AUTOLOAD</a></li>
+	<li><a href="#copyright___license">COPYRIGHT &amp; LICENSE</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>App::SyncIMAP - Application class for sync-imap.pl</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>sync-imap.pl is a script to synchronize a remote IMAP folder and a
+local Maildir.</p>
+<p>This application is an alternative to
+<a href="http://www.linux-france.org/prj/imapsync">http://www.linux-france.org/prj/imapsync</a>,
+<a href="http://home.arcor.de/armin.diehl/imapcopy/imapcopy.html">http://home.arcor.de/armin.diehl/imapcopy/imapcopy.html</a>,
+<a href="http://isync.sourceforge.net/mbsync.html">http://isync.sourceforge.net/mbsync.html</a> and probably a bunch
+of other handy tools.</p>
+<p>When running <code>sync-imap.pl</code>, the configuration file will be used to
+construct <a href="#app__syncimap__client">App::SyncIMAP::Client</a> objects. Example config:</p>
+<pre>
+    [Gmail]
+    maildir=/home/USERNAME/mail/Gmail
+    username=username@gmail.com
+    password=BASE64-ENCODED-STRING
+    server=imap.gmail.com
+    port=993
+    trash_mailbox=[Gmail]/Trash</pre>
+<p>The encoded password can be constructed with this application.</p>
+<p>
+</p>
+<h2><a name="todo">Todo</a></h2>
+<p>There's probably a lot to do, but...</p>
+<ul>
+<li>
+<p>Bugfixing. This application has not been used much, so there's probably
+som evil bugs lurking.</p>
+</li>
+<li>
+<p>Adding files locally will not get synced back to IMAP. This script
+currently regards the IMAP folder as data source. This will/can be
+changed in the future.</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+    # encode a password for config file:
+    sync-imap.pl encode;</pre>
+<pre>
+    # dump information
+    sync-imap.pl --config /path/to/config.ini dump;
+    sync-imap.pl /path/to/config.ini dump;</pre>
+<pre>
+    # sync with local mailbox:
+    sync-imap.pl --config /path/to/config.ini sync;
+    sync-imap.pl /path/to/config.ini sync;
+    sync-imap.pl /path/to/config.ini;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
+<p>App::SyncIMAP::Client - IMAP client class</p>
+<p>
+</p>
+<hr />
+<h1><a name="disclaimer">DISCLAIMER</a></h1>
+<p>THIS APPLICATION HAS JUST BEEN TESTED BRIEFLY! USE IT AT YOUR OWN RISK!</p>
+<p>
+</p>
+<hr />
+<h1><a name="environment">ENVIRONMENT</a></h1>
+<p>
+</p>
+<h2><a name="verbosity_syncimap">VERBOSITY_SYNCIMAP</a></h2>
+<p>This environment variable will set the verbosity level for this code.
+The default is &quot;1&quot;, but it can be forced to &quot;0&quot; or &quot;5&quot;.</p>
+<ol>
+<li><strong><a name="means_silence" class="item">means silence.</a></strong>
+
+</li>
+<li><strong><a name="means_print_useful_information_to_screen" class="item">means print &quot;useful&quot; information to screen.</a></strong>
+
+</li>
+<li><strong><a name="means_print_internal_debugging" class="item">means print internal debugging.</a></strong>
+
+</li>
+</ol>
+<p>
+</p>
+<hr />
+<h1><a name="attributes">ATTRIBUTES</a></h1>
+<p>
+</p>
+<h2><a name="maildir">maildir</a></h2>
+<p>Default &quot;Mail&quot;.</p>
+<p>
+</p>
+<h2><a name="port">port</a></h2>
+<p>Default 993.</p>
+<p>
+</p>
+<h2><a name="server">server</a></h2>
+<p>Default &quot;localhost&quot;. Could be set to &quot;imap.google.com&quot; for Google.</p>
+<p>
+</p>
+<h2><a name="ssl">ssl</a></h2>
+<p>Default 1 if <a href="#port">port</a> is &quot;993&quot;. Can be specified if <a href="#port">port</a> is not
+the standard &quot;993&quot;.</p>
+<p>
+</p>
+<h2><a name="username">username</a></h2>
+<p>Required input. Plain string with the login username. Must contain
+the whole email address for some services, such as Google.</p>
+<p>
+</p>
+<h2><a name="password">password</a></h2>
+<p>Required input. Should be a <a href="/MIME/Base64.html">the MIME::Base64 manpage</a> encoded string to make
+it a bit harder to read.</p>
+<p>
+</p>
+<h2><a name="timeout">timeout</a></h2>
+<p>Default 10. Given in seconds.</p>
+<p>
+</p>
+<h2><a name="can_delete">can_delete</a></h2>
+<p>Default 0. The client cannot delete or expunge mails on the server.</p>
+<p>
+</p>
+<h2><a name="trash_mailbox">trash_mailbox</a></h2>
+<p>Default &quot;Trash&quot;. Could be set to &quot;[Gmail]/Trash&quot; for Google.</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<p>
+</p>
+<h2><a name="track_file">track_file</a></h2>
+<pre>
+    $self-&gt;track_file($file, $timestamp);</pre>
+<p>Will mark a file as tracked.</p>
+<p>
+</p>
+<h2><a name="tracked_files">tracked_files</a></h2>
+<pre>
+    @filenames = $self-&gt;tracked_files;</pre>
+<p>Returns a list of files relative to <a href="#maildir">maildir</a>.</p>
+<p>
+</p>
+<h2><a name="tracked_file_timestamp">tracked_file_timestamp</a></h2>
+<pre>
+    $int = $self-&gt;tracked_file_timestamp($file);</pre>
+<p>Will return an epoch time for the last time the file was tracked.
+The timestamp is set inside <a href="#sync">sync</a>. Returns <code>undef</code> if the file
+is not tracked.</p>
+<p>
+</p>
+<h2><a name="untrack_file">untrack_file</a></h2>
+<pre>
+    $self-&gt;untrack_file($file);</pre>
+<p>Will remove the tracking of the file in the internal storage.</p>
+<p>
+</p>
+<h2><a name="uid_to_file">uid_to_file</a></h2>
+<pre>
+    $file = $self-&gt;uid_to_file($uid, $file);
+    $file = $self-&gt;uid_to_file($uid);</pre>
+<p>The first will store the <a href="/Net/IMAP/Simple.html#uid">uid</a> for a given file
+and the second will simply return the uid if it exists. Returns
+<code>undef</code> if the uid is not mapped to a file.</p>
+<p>
+</p>
+<h2><a name="login">login</a></h2>
+<p>Will use <a href="#username">username</a> and <a href="#password">password</a> to login. Will throw an exception
+if it fails.</p>
+<p>
+</p>
+<h2><a name="dump">dump</a></h2>
+<pre>
+    ??? = $self-&gt;dump;</pre>
+<p>TBD.</p>
+<p>
+</p>
+<h2><a name="sync">sync</a></h2>
+<p>Will sync the given <a href="#maildir">maildir</a> to/from the given <a href="#server">server</a>. It will
+create the directories and mails on local disk when seen on the server:</p>
+<pre>
+    $maildir/$mailbox/$uid</pre>
+<p>The <code>$mailbox</code> part may contain more than one level of directories.
+The <code>$uid</code> is used to track which files was seen and not. In addition
+it will store the UID and file information in</p>
+<pre>
+    $maildir/.mail_map</pre>
+<p>which is a file containg a complex Perl data structure.</p>
+<p>This method use <a href="/Net/IMAP/Simple.html#mailboxes">mailboxes in the Net::IMAP::Simple manpage</a> to retrieve the mailbox
+list, <a href="#sync_message">sync_message</a> to do the actual syncing and last
+<a href="/Net/IMAP/Simple.html#expunge_mailbox">expunge_mailbox in the Net::IMAP::Simple manpage</a> to expunge any mailes marked for
+deletion. After the chatting with the server it will delete all the
+<a href="#tracked_files">files</a> on disk which is not on the server.</p>
+<p>
+</p>
+<h2><a name="sync_message">sync_message</a></h2>
+<pre>
+    $self-&gt;sync_message($message_number, $timestamp);</pre>
+<p>This method need to be called after called after <code>chdir</code>ed to
+the <a href="#maildir">maildir</a>. It will do:</p>
+<ul>
+<li>
+<p>Track and skip the file if it already exists on the filesystem</p>
+</li>
+<li>
+<p>Delete the file from server if the file was previously tracked,
+but no longer exists on the filesystem.</p>
+</li>
+<li>
+<p>Download the file from server and store it on disk.</p>
+</li>
+</ul>
+<p>
+</p>
+<h2><a name="remote_delete">remote_delete</a></h2>
+<pre>
+    $self-&gt;remote_delete($message_number, $file);</pre>
+<p>Will delete an email on the server with the given <code>$message_number</code> and
+in the <a href="/Net/IMAP/Simple.html#current_box">current mailbox</a>.</p>
+<p>The email will be copied to trash first and the later expunge it if current
+mailbox is l&lt;/trash_mailbox&gt;.</p>
+<p>
+</p>
+<h2><a name="uid">uid</a></h2>
+<p>Does the same as <a href="/Net/IMAP/Simple.html#uid">uid in the Net::IMAP::Simple manpage</a>, but will raise an exception
+if no UID was returned.</p>
+<p>
+</p>
+<h2><a name="write_mail_map">write_mail_map</a></h2>
+<p>Will dump the tacked UID and file information to disk. This method
+is the last thing <a href="#sync">sync</a> calls.</p>
+<p>
+</p>
+<h2><a name="new">new</a></h2>
+<pre>
+    $self = $class-&gt;new(\%attr);</pre>
+<p>Object constructor. See <a href="#attributes">ATTRIBUTES</a> for details on constructor arguments.</p>
+<p>
+</p>
+<hr />
+<h1><a name="autoload">AUTOLOAD</a></h1>
+<p>Yes... I know <code>AUTOLOAD</code> is evil. The rest of the methods available
+on this object is proxied to <a href="/Net/IMAP/Simple.html">the Net::IMAP::Simple manpage</a>.</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright___license">COPYRIGHT &amp; LICENSE</a></h1>
+<p>This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Jan Henning Thorsen <code>jhthorsen at cpan.org</code></p>
