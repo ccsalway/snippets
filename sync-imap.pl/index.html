@@ -9,24 +9,20 @@ title: Synchronize IMAP <=> Maildir folders
 <ul>
 
 	<li><a href="#name">NAME</a></li>
+	<li><a href="#disclaimer">DISCLAIMER</a></li>
 	<li><a href="#description">DESCRIPTION</a></li>
 	<ul>
 
 		<li><a href="#todo">Todo</a></li>
 	</ul>
-
 	<li><a href="#synopsis">SYNOPSIS</a></li>
-	<li><a href="#name">NAME</a></li>
-	<li><a href="#disclaimer">DISCLAIMER</a></li>
 	<li><a href="#environment">ENVIRONMENT</a></li>
 	<ul>
-
 		<li><a href="#verbosity_syncimap">VERBOSITY_SYNCIMAP</a></li>
 	</ul>
-
+	<li><a href="#App_SyncIMAP_Client">App::SyncIMAP::Client</a></li>
 	<li><a href="#attributes">ATTRIBUTES</a></li>
 	<ul>
-
 		<li><a href="#maildir">maildir</a></li>
 		<li><a href="#port">port</a></li>
 		<li><a href="#server">server</a></li>
@@ -69,6 +65,9 @@ title: Synchronize IMAP <=> Maildir folders
 </p>
 <h1><a name="name">NAME</a></h1>
 <p>App::SyncIMAP - Application class for sync-imap.pl</p>
+<hr />
+<h1><a name="disclaimer">DISCLAIMER</a></h1>
+<p>THIS APPLICATION HAS JUST BEEN TESTED BRIEFLY! USE IT AT YOUR OWN RISK!</p>
 <p>
 </p>
 <hr />
@@ -81,7 +80,7 @@ local Maildir.</p>
 <a href="http://isync.sourceforge.net/mbsync.html">http://isync.sourceforge.net/mbsync.html</a> and probably a bunch
 of other handy tools.</p>
 <p>When running <code>sync-imap.pl</code>, the configuration file will be used to
-construct <a href="#app__syncimap__client">App::SyncIMAP::Client</a> objects. Example config:</p>
+construct <a href="#App_SyncIMAP_Client">App::SyncIMAP::Client</a> objects. Example config:</p>
 <pre>
     [Gmail]
     maildir=/home/USERNAME/mail/Gmail
@@ -124,34 +123,21 @@ changed in the future.</p>
     sync-imap.pl /path/to/config.ini;</pre>
 <p>
 </p>
-<hr />
-<h1><a name="name">NAME</a></h1>
-<p>App::SyncIMAP::Client - IMAP client class</p>
-<p>
-</p>
-<hr />
-<h1><a name="disclaimer">DISCLAIMER</a></h1>
-<p>THIS APPLICATION HAS JUST BEEN TESTED BRIEFLY! USE IT AT YOUR OWN RISK!</p>
-<p>
-</p>
-<hr />
 <h1><a name="environment">ENVIRONMENT</a></h1>
 <p>
 </p>
 <h2><a name="verbosity_syncimap">VERBOSITY_SYNCIMAP</a></h2>
 <p>This environment variable will set the verbosity level for this code.
 The default is &quot;1&quot;, but it can be forced to &quot;0&quot; or &quot;5&quot;.</p>
-<ol>
-<li><strong><a name="means_silence" class="item">means silence.</a></strong>
-
-</li>
-<li><strong><a name="means_print_useful_information_to_screen" class="item">means print &quot;useful&quot; information to screen.</a></strong>
-
-</li>
-<li><strong><a name="means_print_internal_debugging" class="item">means print internal debugging.</a></strong>
-
-</li>
-</ol>
+<ul>
+<li>means silence.</li>
+<li>means print &quot;useful&quot; information to screen.</li>
+<li>means print internal debugging.</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="App_SyncIMAP_Client">App::SyncIMAP::Client</a></h1>
 <p>
 </p>
 <hr />
@@ -181,7 +167,7 @@ the whole email address for some services, such as Google.</p>
 <p>
 </p>
 <h2><a name="password">password</a></h2>
-<p>Required input. Should be a <a href="/MIME/Base64.html">the MIME::Base64 manpage</a> encoded string to make
+<p>Required input. Should be a <a href="http://search.cpan.org/dist/MIME-Base64/Base64.pm">the MIME::Base64 manpage</a> encoded string to make
 it a bit harder to read.</p>
 <p>
 </p>
@@ -231,7 +217,7 @@ is not tracked.</p>
 <pre>
     $file = $self-&gt;uid_to_file($uid, $file);
     $file = $self-&gt;uid_to_file($uid);</pre>
-<p>The first will store the <a href="/Net/IMAP/Simple.html#uid">uid</a> for a given file
+<p>The first will store the <a href="http://search.cpan.org/dist/Net-IMAP-Simple/Simple.pod#uid">uid</a> for a given file
 and the second will simply return the uid if it exists. Returns
 <code>undef</code> if the uid is not mapped to a file.</p>
 <p>
@@ -258,9 +244,9 @@ it will store the UID and file information in</p>
 <pre>
     $maildir/.mail_map</pre>
 <p>which is a file containg a complex Perl data structure.</p>
-<p>This method use <a href="/Net/IMAP/Simple.html#mailboxes">mailboxes in the Net::IMAP::Simple manpage</a> to retrieve the mailbox
+<p>This method use <a href="http://search.cpan.org/dist/Net-IMAP-Simple/Simple.pod#mailboxes">mailboxes in the Net::IMAP::Simple manpage</a> to retrieve the mailbox
 list, <a href="#sync_message">sync_message</a> to do the actual syncing and last
-<a href="/Net/IMAP/Simple.html#expunge_mailbox">expunge_mailbox in the Net::IMAP::Simple manpage</a> to expunge any mailes marked for
+<a href="http://search.cpan.org/dist/Net-IMAP-Simple/Simple.pod#expunge_mailbox">expunge_mailbox in the Net::IMAP::Simple manpage</a> to expunge any mailes marked for
 deletion. After the chatting with the server it will delete all the
 <a href="#tracked_files">files</a> on disk which is not on the server.</p>
 <p>
@@ -288,13 +274,13 @@ but no longer exists on the filesystem.</p>
 <pre>
     $self-&gt;remote_delete($message_number, $file);</pre>
 <p>Will delete an email on the server with the given <code>$message_number</code> and
-in the <a href="/Net/IMAP/Simple.html#current_box">current mailbox</a>.</p>
+in the <a href="http://search.cpan.org/dist/Net-IMAP-Simple/Simple.pod#current_box">current mailbox</a>.</p>
 <p>The email will be copied to trash first and the later expunge it if current
 mailbox is l&lt;/trash_mailbox&gt;.</p>
 <p>
 </p>
 <h2><a name="uid">uid</a></h2>
-<p>Does the same as <a href="/Net/IMAP/Simple.html#uid">uid in the Net::IMAP::Simple manpage</a>, but will raise an exception
+<p>Does the same as <a href="http://search.cpan.org/dist/Net-IMAP-Simple/Simple.pod#uid">uid in the Net::IMAP::Simple manpage</a>, but will raise an exception
 if no UID was returned.</p>
 <p>
 </p>
@@ -312,7 +298,7 @@ is the last thing <a href="#sync">sync</a> calls.</p>
 <hr />
 <h1><a name="autoload">AUTOLOAD</a></h1>
 <p>Yes... I know <code>AUTOLOAD</code> is evil. The rest of the methods available
-on this object is proxied to <a href="/Net/IMAP/Simple.html">the Net::IMAP::Simple manpage</a>.</p>
+on this object is proxied to <a href="http://search.cpan.org/dist/Net-IMAP-Simple/Simple.pod">the Net::IMAP::Simple manpage</a>.</p>
 <p>
 </p>
 <hr />
