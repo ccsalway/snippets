@@ -1,11 +1,9 @@
 ---
 layout: default
-title: snippets/bin/sibs
+title: Snippets - Simple incremental backup script
 ---
 
-<h2>sibs - Simple incremental backup script</h2>
-
-<h3>Description</h3>
+<h2>Description</h2>
 <p>
     This script is a wrapper around <a href="http://samba.anu.edu.au/rsync/">rsync</a>,
     and takes backups from one host
@@ -28,7 +26,7 @@ title: snippets/bin/sibs
     <code$DST_HOST</code>.
 </p>
 
-<h3>Synopsis</h3>
+<h2>Synopsis</h2>
 <pre>
 $ sibs &lt;man|help&gt;
 $ sibs &lt;hour|day|keygen|test&gt; &lt;config-file&gt;
@@ -50,7 +48,7 @@ $ sibs &lt;config&gt; [config-file]
     <li>config - print either sample config, or content of config-file</li>
 </ul>
 
-<h3>Status example</h3>
+<h2>Status example</h2>
 <pre>
 $ sibs status myconfig.env path/to/file
 --- Status for file path/to/file
@@ -73,7 +71,7 @@ M day.1105-0012 310K
 $ sibs status /dst_dir/ backup_name path/to/file
 </pre>
 
-<h3>Requirements</h3>
+<h2>Requirements</h2>
 <p>
     <a href="http://www.openssh.com/">ssh</a>,
     <a href="http://samba.anu.edu.au/rsync/">rsync</a>,
@@ -82,13 +80,13 @@ $ sibs status /dst_dir/ backup_name path/to/file
     <a href="http://www.perl.org/">perl</a>.
 </p>
 
-<h3>Resources</h3>
+<h2>Resources</h2>
 <ul>
     <li><a href="http://github.com/jhthorsen/snippets/blob/master/bin/sibs">Source code</a></li>
     <li><a href="http://github.com/jhthorsen/snippets/issues">Issues</a></li>
 </ul>
 
-<h3>License</h3>
+<h2>License</h2>
 <p>
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
