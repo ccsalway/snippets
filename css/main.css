@@ -1,7 +1,7 @@
 body, input, select, textarea, td {
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: normal;
-    font-family: sans-serif;
+    font-family: arial, sans-serif;
     color: #000;
 }
 
@@ -9,7 +9,7 @@ body {
     background: #fff;
     margin: 0em;
     padding: 0;
-    line-height: 1.6em;
+    line-height: 1.4em;
 }
 
 a {
@@ -22,20 +22,13 @@ a {
     text-decoration: underline;
 }
 
-#content h1 a:hover,
-#content h2 a:hover,
-#content h3 a:hover,
-#content h4 a:hover {
-    text-decoration: none;
-}
-
 img {
     border: 0;
 }
 
 h1, h2, h3 {
     font-weight: bold;
-    margin: 1em 0;
+    margin: 0.8em 0;
     padding: 0;
 }
 
@@ -48,11 +41,11 @@ h1 {
 }
 
 h2 {
-    font-size 1.6em;
+    font-size: 1.3em;
 }
 
 h3 {
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 
 code, pre {
@@ -63,11 +56,16 @@ code, pre {
 
 pre {
     line-height: 1.4em;
-    padding: 0.5em;
+    padding: 0.5em 1.1em;
+    margin: 0.5em -1.2em;
 }
 
 #container {
-    margin: 2em 5em;
+    background: #f3f3ff;
+    margin: 2em auto;
+    padding: 1em;
+    width: 48em;
+    border: 1px solid #ccc;
 }
 
 #header {
@@ -76,17 +74,29 @@ pre {
 
 #header h1 {
     margin: 0;
+    padding: 0.6em 0;
 }
 
-#header h1 a {
-    padding: 0.6em 0;
-    display: block;
+#content h1 a:hover,
+#content h2 a:hover,
+#content h3 a:hover,
+#content h4 a:hover {
+    text-decoration: none;
 }
 
 #footer {
     font-size: 0.8em;
     margin-top: 3em;
     border-top: 1px solid #33f;
+}
+
+#disqus_thread {
+    border-top: 1px solid #48a;
+    margin-top: 3em;
+}
+
+#disqus_thread #dsq-post-add-iframe {
+    overflow: hidden;
 }
 
 #disqus_thread {
