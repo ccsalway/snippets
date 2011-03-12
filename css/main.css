@@ -22,6 +22,13 @@ a {
     text-decoration: underline;
 }
 
+#content h1 a:hover,
+#content h2 a:hover,
+#content h3 a:hover,
+#content h4 a:hover {
+    text-decoration: none;
+}
+
 img {
     border: 0;
 }
