@@ -1,0 +1,95 @@
+---
+layout: default
+title: Snippets - garmin-auto-import - Import data from your Garmin device
+---
+
+<h2>Description</h2>
+<p>
+    <a href="http://github.com/jhthorsen/snippets/blob/master/bin/garmin-auto-import">garmin-auto-import</a>
+    runs in the background and detects when you connect your <a href="http://garmin.com">Garmin</a>
+    device. It will then synchronize the data into your <code>Documents/garmin</code>
+    folder, and prompt you for more actions to do.
+</p>
+
+<h2>Screenshots</h2>
+<p>
+    <a href="https://www.facebook.com/media/set/?set=a.296298545316.329894.844565316&type=1">
+        <img alt="#1" src="https://fbcdn-sphotos-a.akamaihd.net/hphotos-ak-ash4/300334_10150809221255317_844565316_20682052_1782689855_n.jpg">
+        <img alt="#2" src="https://fbcdn-sphotos-a.akamaihd.net/hphotos-ak-ash4/318688_10150809221320317_844565316_20682053_982099028_n.jpg">
+        <img alt="#3" src="https://fbcdn-sphotos-a.akamaihd.net/hphotos-ak-ash4/302208_10150809221390317_844565316_20682054_968652677_n.jpg">
+    </a>
+</p>
+
+<h2>Synopsis</h2>
+<pre>
+Help:
+$ garmin-auto-import --help
+
+Run it
+$ garmin-auto-import
+
+Upload files manually:
+$ garmin-auto-import upload Documents/garmin/2011-09-04T18:08:09Z.tcx ...
+</pre>
+
+<h2>Install</h2>
+<pre>
+# garmin-auto-import
+sudo wget http://github.com/jhthorsen/snippets/blob/master/bin/garmin-auto-import \
+    -O /usr/local/bin/garmin-auto-import
+chmod +x /usr/local/bin/garmin-auto-import
+
+# garmin-sync
+wget http://launchpad.net/garmin-sync/devel/0.3/+download/garmin-sync-0.3.tar.gz
+tar xfzv garmin-sync-0.3.tar.gz
+sudo cp garmin-sync-0.3/* /usr/local/bin/
+rm -r garmin-sync-0.3*
+
+# Mojolicious
+wget -q http://cpanmin.us | perl - --sudo Mojolicious
+
+# The rest...
+sudo apt-get install \
+    getopt-long-descriptive \
+    libdevice-usb-perl \
+    libipc-run3-perl \
+    python-usb
+</pre>
+
+<h2>Run it</h2>
+<p>
+    <a href="https://www.facebook.com/media/set/?set=a.296298545316.329894.844565316&type=1">
+        <img alt="#1" src="https://fbcdn-sphotos-a.akamaihd.net/hphotos-ak-snc7/301136_10150809494375317_844565316_20683430_1201407013_n.jpg">
+    </a>
+</p>
+
+<h2>Requirements</h2>
+<p>
+    <a href="http://launchpad.net/garmin-sync">garmin-sync</a>,
+    <a href="http://perl.org/">Perl</a>,
+    <a href="https://metacpan.org/release/Device-USB">Device::USB</a>,
+    <a href="https://metacpan.org/release/Getopt-Long-Descriptive">Getopt::Long::Descriptive</a>,
+    <a href="https://metacpan.org/release/IPC-Run3">IPC-Run3</a>,
+    <a href="https://metacpan.org/release/Mojolicious">Mojolicious</a> and
+    <a href="http://gnome.org/">Gnome</a> environment (nautilus, send-to, gnome-open, zenity),
+</p>
+
+<h2>Resources</h2>
+<ul>
+    <li><a href="http://github.com/jhthorsen/snippets/blob/master/bin/garmin-auto-import">Source code</a></li>
+    <li><a href="http://github.com/jhthorsen/snippets/issues">Issues</a></li>
+</ul>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_identifier = 'garmin-auto-import';
+  (function() {
+   var dsq = document.createElement('script');
+   dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://jhthorsen-github.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=jhthorsen-github">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
