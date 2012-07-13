@@ -3,9 +3,8 @@ layout: default
 title: Synchronize IMAP and Maildir folders
 ---
 
-<div name="index">
+<h1 class="page-header">Sync IMAP</h1>
 <p><a name="__index__"></a></p>
-
 <ul>
 
 	<li><a href="#disclaimer">DISCLAIMER</a></li>
@@ -56,18 +55,14 @@ title: Synchronize IMAP and Maildir folders
 	<li><a href="#author">AUTHOR</a></li>
 </ul>
 
-<hr name="index" />
-</div>
-<!-- INDEX END -->
-
 <p>
 </p>
-<h1><a name="disclaimer">DISCLAIMER</a></h1>
+<h2><a name="disclaimer">DISCLAIMER</a></h2>
 <p>THIS APPLICATION HAS JUST BEEN TESTED BRIEFLY! USE IT AT YOUR OWN RISK!</p>
 <p>
 </p>
 <hr />
-<h1><a name="description">DESCRIPTION</a></h1>
+<h2><a name="description">DESCRIPTION</a></h2>
 <p>sync-imap.pl is a script to synchronize a remote IMAP folder and a
 local Maildir.</p>
 <p>This application is an alternative to
@@ -104,7 +99,7 @@ changed in the future.</p>
 <p>
 </p>
 <hr />
-<h1><a name="synopsis">SYNOPSIS</a></h1>
+<h2><a name="synopsis">SYNOPSIS</a></h2>
 <pre>
     # encode a password for config file:
     sync-imap.pl encode;</pre>
@@ -119,7 +114,7 @@ changed in the future.</p>
     sync-imap.pl /path/to/config.ini;</pre>
 <p>
 </p>
-<h1><a name="environment">ENVIRONMENT</a></h1>
+<h2><a name="environment">ENVIRONMENT</a></h2>
 <p>
 </p>
 <h2><a name="verbosity_syncimap">VERBOSITY_SYNCIMAP</a></h2>
@@ -133,11 +128,11 @@ The default is &quot;1&quot;, but it can be forced to &quot;0&quot; or &quot;5&q
 <p>
 </p>
 <hr />
-<h1><a name="App_SyncIMAP_Client">App::SyncIMAP::Client</a></h1>
+<h2><a name="App_SyncIMAP_Client">App::SyncIMAP::Client</a></h2>
 <p>
 </p>
 <hr />
-<h1><a name="attributes">ATTRIBUTES</a></h1>
+<h2><a name="attributes">ATTRIBUTES</a></h2>
 <p>
 </p>
 <h2><a name="maildir">maildir</a></h2>
@@ -180,7 +175,7 @@ it a bit harder to read.</p>
 <p>
 </p>
 <hr />
-<h1><a name="methods">METHODS</a></h1>
+<h2><a name="methods">METHODS</a></h2>
 <p>
 </p>
 <h2><a name="track_file">track_file</a></h2>
@@ -292,19 +287,19 @@ is the last thing <a href="#sync">sync</a> calls.</p>
 <p>
 </p>
 <hr />
-<h1><a name="autoload">AUTOLOAD</a></h1>
+<h2><a name="autoload">AUTOLOAD</a></h2>
 <p>Yes... I know <code>AUTOLOAD</code> is evil. The rest of the methods available
 on this object is proxied to <a href="http://search.cpan.org/dist/Net-IMAP-Simple/Simple.pod">the Net::IMAP::Simple manpage</a>.</p>
 <p>
 </p>
 <hr />
-<h1><a name="copyright___license">COPYRIGHT &amp; LICENSE</a></h1>
+<h2><a name="copyright___license">COPYRIGHT &amp; LICENSE</a></h2>
 <p>This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.</p>
 <p>
 </p>
 <hr />
-<h1><a name="author">AUTHOR</a></h1>
+<h2><a name="author">AUTHOR</a></h2>
 <p>Jan Henning Thorsen <code>jhthorsen at cpan.org</code></p>
 
 <div id="disqus_thread"></div>
